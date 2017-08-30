@@ -1,0 +1,50 @@
+<html data-ng-app="beMEAN">
+  <head>
+    <title>Teste01</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-ui-mask/dist/mask.js"></script>
+    
+    <script type="text/javascript">
+      angular.module('beMEAN',['ui.mask'])
+        .filter('reverseName', function(){
+          return function(text) {
+            if(text) return text.split("").reverse().join("");
+          }
+        })
+        .filter('truncate', function(){
+          return function(text, len, end) {
+            if(text) {
+              if(isNaN(len)) len = 10;
+              if(end === undefined) end = "...";
+              if(text.length <= len) return text;
+              else return String(text).substring(0,len) + end; 
+            }
+          }
+        })
+        .filter('cpf', function(){
+          return function(text) {
+            if(text) {
+              if(isNaN(text)) return "";
+              saida = String(text).substring(0,3)  + "." 
+                    + String(text).substring(3,6)  + "." 
+                    + String(text).substring(6,9) + "-" 
+                    + String(text).substring(9,11);
+              return saida;
+            }
+          }
+        });
+    </script>
+  </head>
+
+  <body>
+    <h1>Olá Mundo, meu nome é {{ nome | truncate:5:"*" | uppercase }}</h1>
+    <label for="name">Seu nome:
+      <input type="text" data-ng-model="nome" >
+    </label>
+        <h1>CPF {{ numero | cpf }}</h1>
+    <label for="name">Seu CPF:
+      <input type="text" data-ng-model="numero" ui-mask="999.999.999-99">
+    </label>
+  </body>
+</html>

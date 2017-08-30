@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-ng-app="BeMEAN">
+<head>
+  <meta charset="UTF-8">
+  <title>Be MEAN</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+  <style>
+    .wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
+
+
+  <script>
+    angular.module('BeMEAN', [])
+      .controller('UserController', UserController);
+
+    function UserController() {
+      var vm = this;
+      vm.titulo = "Be MEAN - Usuários";
+      vm.users = [
+        {name: 'Suissa', email: 'suissera@manoveio.com'}
+      , {name: 'João', email: 'joao@macioesedoso.com'}
+      , {name: 'Franciele', email: 'fran@quimica.com'}
+      ];
+
+      vm.add = add;
+      function add(user) {
+        vm.users.push(angular.copy(user));
+      }
+
+      vm.removeByEmail = function(email) {
+        vm.users = vm.users.filter(function(user) { return user.email !== email });
+      }
+    }
+  </script>
+  </head>
+
+<body data-ng-controller="UserController as User">
+<section class="row wrapper">
+  <h1>{{ User.titulo }}</h1>
+  <input ng-model="searchUser" placeholder="Buscar">
+
+  <p>
+    <input type="text" data-ng-model="form.User.name" placeholder="nome">
+    <br>
+    <input type="email" data-ng-model="form.User.email" placeholder="e-mail">
+  </p>
+
+  <button data-ng-click="User.add(form.User)" class="btn btn-large green waves-effect waves-light col s12" type="submit" name="action">ADD USER</button>
+  <span data-ng-init="predicate = 'name'; reverse = true; "></span>
+  <table>
+      <thead>
+        <tr>
+          <th data-ng-repeat="(key, value) in User.users[0]">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="user in User.users | orderBy:predicate:reverse | filter:searchUser ">
+          <td data-ng-repeat="(key, value) in user">{{ value }}</td>
+          <td>
+            <button data-ng-click="User.removeByEmail(user.email)" class="btn btn-large red waves-effect waves-light col s12" type="submit" name="action">Apagar</button>
+          </td>
+        </tr>
+      </tbody>
+    </thead>
+  </table>
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

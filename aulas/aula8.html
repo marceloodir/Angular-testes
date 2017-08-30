@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" data-ng-app="BeMEAN">
+<head>
+  <meta charset="UTF-8">
+  <title>Be MEAN</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <style>
+    .wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .ng-show, .ng-hide{
+      height: 0;
+    }
+
+    .fade.ng-hide, .fade.ng-show {
+      transition:0.5s linear all;
+      opacity: 0;
+    }
+
+    .item.ng-enter {
+       transition:0.5s linear all;
+       opacity: 0;
+    }
+
+    .item.ng-leave {
+       transition:0.5s linear all;
+       opacity: 1;
+    }
+
+    .item.ng-enter-active {
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    .item.ng-leave-active {
+      opacity: 0;
+    }
+
+    .item.
+    
+  </style>
+
+
+  <script>
+    angular.module('BeMEAN', ['ngAnimate'])
+      .controller('UserController', UserController);
+
+    function UserController() {
+      var vm = this;
+      vm.editing = false;
+      vm.titulo = "Be MEAN - Usuários";
+      vm.users = [
+        {name: 'Suissa', email: 'suissera@manoveio.com'}
+      , {name: 'João', email: 'joao@macioesedoso.com'}
+      , {name: 'Franciele', email: 'fran@quimica.com'}
+      ];
+
+      vm.add = add;
+      function add(user) {
+        vm.users.push(angular.copy(user));
+        vm.limpar();
+      }
+
+      vm.remove = function(users) {
+        vm.users = users.filter(function(cada_user) { return !cada_user.selecionado });
+      }
+
+      vm.edit = function(user, index) {
+        vm.form = angular.copy(user);
+        vm.form.index = index
+        vm.editing = true;
+      }
+
+      vm.save = function(user) {
+        vm.users[user.index] = angular.copy(user);
+        delete vm.users[user.index].index;
+        vm.editing = false;
+        vm.limpar();
+      }
+
+      vm.limpar = function() {
+        delete vm.form;
+      }
+
+      vm.default = function() {
+        vm.editing = false;
+        vm.limpar();
+      }
+
+    }
+  </script>
+  </head>
+
+<body data-ng-controller="UserController as User">
+<section class="row wrapper">
+  <h1>{{ User.titulo }}</h1>
+
+  <p>
+    <input type="text" data-ng-model="User.form.name" placeholder="nome">
+    <br>
+    <input type="email" data-ng-model="User.form.email" placeholder="e-mail">
+  </p>
+
+  <button data-ng-click="User.add(User.form)" class="btn btn-large green waves-effect waves-light col s12 " type="submit" name="action" data-ng-hide="User.editing">Adicionar Usuário</button>
+  <button data-ng-click="User.save(User.form)" class="btn btn-large blue waves-effect waves-light col s6 " type="submit" name="action" data-ng-show="User.editing">Salvar Usuário</button>
+  <button data-ng-click="User.default()" class="btn btn-large gray waves-effect waves-light col s6 " type="submit" name="action" data-ng-show="User.editing">Cancelar</button>
+
+  <span data-ng-init="predicate = 'name'; reverse = false; "></span>
+  <table>
+      <thead>
+        <tr>
+          <th colspan="4">
+              <input ng-model="searchUser" placeholder="Buscar">
+          </th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Nome</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="user in User.users | filter:searchUser " class="item">
+          <td>
+            <span></span>
+            <input type="checkbox" id="user-{{$index}}" data-ng-model="user.selecionado" />
+            <label for="user-{{$index}}"></label>
+          </td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td><button data-ng-click="User.edit(user, $index)" class="btn btn-large blue waves-effect waves-light col s12" type="submit" name="action">Editar</button></td>
+        </tr>
+      </tbody>
+    </thead>
+  </table>
+  <button data-ng-click="User.remove(User.users)" class="btn btn-large red waves-effect waves-light col s12" type="submit" name="action">Apagar Selecionados</button>
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

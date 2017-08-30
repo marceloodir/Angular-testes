@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" data-ng-app="BeMEAN">
+<head>
+  <meta charset="UTF-8">
+  <title>Be MEAN</title>
+
+    <!--Angular -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+  <style>
+    
+    .wrapper {
+      max-width: 600px;
+      margin-top: 80px;
+      margin-right: auto;
+      margin-left: auto;
+      margin-bottom: 0px;
+    }
+
+    img.resize {
+      width: auto; /* you can use % */
+      height: 50px;
+      margin-top: 7px;
+      margin-left: 10px;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    [disabled] {
+      background-color: #ccc !important;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .ng-show, .ng-hide{
+      height: 0;
+    }
+
+    .fade.ng-hide, .fade.ng-show {
+      transition:0.5s linear all;
+      opacity: 0;
+    }
+
+    .item.ng-enter {
+       transition:0.5s linear all;
+       opacity: 0;
+    }
+
+    .item.ng-leave {
+       transition:0.5s linear all;
+       opacity: 1;
+    }
+
+    .item.ng-enter-active {
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    .item.ng-leave-active {
+      opacity: 0;
+    }
+
+    .campo {
+      margin-top: 40px;
+      margin-bottom: 40px;
+      padding: 5px;
+      height: 83px;
+    }
+
+    .invalid {
+      border-style: solid;
+      border-radius: 10px;
+      border-color: red;
+      border-width: 3px;
+      padding-bottom: 2px;
+      padding-top: 2px;
+    }
+
+    .botoes {
+      margin-top: 20px
+    }
+
+    .notify_error {
+      margin-top: 0px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .animate-show-hide.ng-hide {
+      opacity: 0;
+    }
+
+    .animate-show-hide.ng-hide-add,
+    .animate-show-hide.ng-hide-remove {
+      transition: all linear 0.5s;
+    }
+
+  </style>
+
+
+  <script>
+    angular.module('BeMEAN', ['ngAnimate'])
+      .controller('UserController', UserController);
+
+    function UserController() {
+      var vm = this;
+      vm.editing = false;
+      vm.titulo = "Be MEAN - Usuários";
+      vm.users = [
+        {name: 'Suissa', email: 'suissera@manoveio.com'}
+      , {name: 'João', email: 'joao@macioesedoso.com'}
+      , {name: 'Franciele', email: 'fran@quimica.com'}
+      ];
+
+      vm.add = add;
+      function add(user) {
+        vm.users.push(angular.copy(user));
+        vm.limpar();
+      }
+
+      vm.remove = function(users) {
+        vm.users = users.filter(function(cada_user) { return !cada_user.selecionado });
+      }
+
+      vm.edit = function(user, index) {
+        vm.form = angular.copy(user);
+        vm.form.index = index
+        vm.editing = true;
+      }
+
+      vm.save = function(user) {
+        vm.users[user.index] = angular.copy(user);
+        delete vm.users[user.index].index;
+        vm.editing = false;
+        vm.limpar();
+      }
+
+      vm.limpar = function() {
+        delete vm.form;
+      }
+
+      vm.default = function() {
+        vm.editing = false;
+        vm.limpar();
+      }
+
+    }
+  </script>
+  </head>
+
+<body data-ng-controller="UserController as User">
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">
+        <img src="https://blog.vilourenco.com.br/wp-content/uploads/2014/09/angularjs-logo.png" alt="Angular" class="resize" >
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="">Inicio</a></li>
+        <li><a href="">Opções</a></li>
+        <li><a href="">...</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<section class="row wrapper">
+
+  <form name="User.userForm" data-ng-submit="User.add(User.form)">
+
+    <div class="input-field " >
+      <i class="material-icons prefix">account_circle</i>
+      <input type="text" name="name" data-ng-model="User.form.name" required minlength="3" class="validate">
+      <label for="name" data-error="Requerido, deve ser maior que 3 caracteres." data-success="OK">Nome:</label>
+    </div>
+
+    <div class="input-field ">
+      <i class="material-icons prefix">email</i>
+      <input type="email" name="email" data-ng-model="User.form.email" class="validate">
+      <label for="email" data-error="E-mail deve ser válido." data-success="OK">Email:</label>
+    </div>
+
+    <div class="botoes">
+      <button class="btn btn-large green waves-effect waves-light col s12 " type="submit" name="action" data-ng-hide="User.editing" data-ng-disabled="User.userForm.name.$invalid">Adicionar Usuário</button>
+      <button data-ng-click="User.save(User.form)" class="btn btn-large blue waves-effect waves-light col s6 " type="submit" name="action" data-ng-show="User.editing">Salvar Usuário</button>
+      <button data-ng-click="User.default()" class="btn btn-large gray waves-effect waves-light col s6 " type="submit" name="action" data-ng-show="User.editing">Cancelar</button>
+    </div>
+    
+  </form>
+
+<!--   <h4>error: {{ User.userForm.$error }}</h4> -->
+<!--   <h4>nome do Form foi tocado: {{User.userForm.name.$touched}}</h4>
+  <h4>nome do Form is Invalid: {{User.userForm.name.$invalid}}</h4>
+  <h4>nome do Form is Invalid: {{User.userForm.name.$invalid}}</h4>
+  <h4>Form foi tocado: {{User.userForm.name.$dirty}}</h4>
+  <h4>email do Form is Invalid: {{User.userForm.email.$invalid}}</h4>
+ -->
+
+  <span data-ng-init="predicate = 'name'; reverse = false; "></span>
+  <table>
+      <thead>
+        <tr>
+          <th colspan="4">
+              <input ng-model="searchUser" placeholder="Buscar">
+          </th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Nome</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="user in User.users | filter:searchUser " class="item">
+          <td>
+            <span></span>
+            <input type="checkbox" id="user-{{$index}}" data-ng-model="user.selecionado" />
+            <label for="user-{{$index}}"></label>
+          </td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td><button data-ng-click="User.edit(user, $index)" class="btn btn-large blue waves-effect waves-light col s12" type="submit" name="action">Editar</button></td>
+        </tr>
+      </tbody>
+    </thead>
+  </table>
+  <button data-ng-click="User.remove(User.users)" class="btn btn-large red waves-effect waves-light col s12" type="submit" name="action">Apagar Selecionados</button>
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

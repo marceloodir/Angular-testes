@@ -1,0 +1,94 @@
+<html lang="en" data-ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Mk Front</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.js"></script>
+  
+  <style>
+    .wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+  </style>
+  
+  <script>
+    angular.module('app', ['ngAnimate'])
+      .controller('ContactController', ContactController);
+
+    function ContactController($http) {
+      var vm = this;
+      const url = 'http://localhost:3000/contacts';
+      const method = 'GET';
+        $http({
+          method: method,
+          url: url
+        }).then(
+            function successCallback(response) {
+              console.log('recebido',response.data);
+              vm.contacts = response.data}, 
+            function errorCallback(response) {
+              console.log('err', response);}
+        );
+
+      vm.add = function(contact) {
+        successCallback = function(response) {
+          vm.contacts.push(angular.copy(contact));
+          delete vm.form;
+        }
+        errorCallback = function(response) {
+          console.log('err',response)
+        }
+
+        $http.post(url, contact).then(successCallback, errorCallback);
+      }
+
+
+    }
+  </script>
+
+</head>
+<body data-ng-controller="ContactController as Contact" class="wrapper">
+  
+  <h2>Requisitando dados do rails api</h2>
+
+  <p>
+    <label>
+      <input type="text" data-ng-model="Contact.form.name" placeholder="Name">
+    </label>
+    <br>
+    <label>
+      <input type="email" data-ng-model="Contact.form.email" placeholder="Email">
+    </label>
+    <label>
+      <input type="text" data-ng-model="Contact.form.tel" placeholder="Telefone">
+    </label>
+    <label>
+      <input type="text" data-ng-model="Contact.form.bithdate" placeholder="Nascimento">
+    </label>
+    <button  data-ng-click="Contact.add(Contact.form)" class="btn btn-large green waves-effect waves-light col s12" type="submit" name="action">Add</button>
+  </p>
+
+
+  <table>
+    <thead>
+    <tr>
+      <td colspan="4">
+        <label for="">Buscar: <input type="text" data-ng-model="searchUser"></label><br>
+      </td>
+    </tr>
+      <tr>
+        <td>Nome</td><td>E-mail</td><td>Telefone</td><td>Nascimento</td>
+    </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="contact in Contact.contacts | orderBy:'name':false | filter: searchUser">
+        <td>{{ contact.name }}</td><td>{{ contact.email }}</td><td>{{ contact.tel }}</td><td>{{ contact.bithdate }}</td>
+       </tr>
+    </tbody>
+  </table>
+  
+</body>
+</html>

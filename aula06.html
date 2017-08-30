@@ -1,0 +1,49 @@
+<html data-ng-app="beMEAN">
+  <head>
+    <title>Teste01</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+    
+    <script type="text/javascript">
+      angular.module('beMEAN',[])
+        .controller('UserController', UserController)
+        .controller('CursoController', CursoController);
+
+        function UserController () {
+          var vm = this;
+          vm.titulo = "beMEAN";
+          vm.users = [
+          {nome: 'Marcelo Odir', email: 'marcelo@odir.com'},
+          {nome: 'Millena Delgado', email: 'millena@delgado.org'},
+          {nome: 'Odir Macedo', email: 'odir@macedo.net'}];
+        }
+
+        function CursoController () {
+          var vm = this;
+          vm.titulo = "beMEAN";
+          vm.cursos = [
+          {nome: 'AngularJS', teacher: 'Marcelo Odir'},
+          {nome: 'MongoDB', teacher: 'Millena Delgado'},
+          {nome: 'Android', teacher: 'Odir Macedo'}];
+        }
+
+    </script>
+  </head>
+
+  <body data-ng-controller="UserController as User">
+    <h1>{{ User.titulo }}</h1>
+
+    <ul>
+      <li data-ng-repeat="user in User.users">
+        {{ user.nome }} - {{ user.email }}
+      </li>
+    </ul>
+    <div data-ng-controller="CursoController as Curso">
+      <ul>
+        <li data-ng-repeat="curso in Curso.cursos">
+          {{ curso.nome }} - {{ curso.teacher }}
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
