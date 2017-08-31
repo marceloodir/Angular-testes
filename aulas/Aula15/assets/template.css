@@ -1,0 +1,121 @@
+.aviso-form {
+  position: relative;
+  top: -1rem;
+  left: 0rem;
+  font-size: 0.8rem;
+  text-align: right;
+  -webkit-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%);
+}
+
+.aviso-form-error {
+  color: #FF4081;
+  font-weight: bold;
+}
+
+.aviso-form-ok {
+  color: #4CAF50;
+}
+
+.wrapper {
+  max-width: 600px;
+  margin-top: 80px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0px;
+}
+
+
+img.resize {
+  width: auto; /* you can use % */
+  height: 50px;
+  margin-top: 7px;
+  margin-left: 10px;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+[disabled] {
+  background-color: #ccc !important;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.input-field {
+  height: 66px;
+}
+
+.name_angular {
+  margin-left: 60px;
+  font-weight: bold;
+}
+
+.ng-show, .ng-hide{
+  height: 0;
+}
+
+.fade.ng-hide, .fade.ng-show {
+  transition:0.5s linear all;
+  opacity: 0;
+}
+
+.item.ng-enter {
+   transition:0.5s linear all;
+   opacity: 0;
+}
+
+.item.ng-leave {
+   transition:0.5s linear all;
+   opacity: 1;
+}
+
+.item.ng-enter-active {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.item.ng-leave-active {
+  opacity: 0;
+}
+
+.campo {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 5px;
+  height: 83px;
+}
+
+.invalid {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: red;
+  border-width: 3px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.botoes {
+  margin-top: 20px
+}
+
+.notify_error {
+  margin-top: 0px;
+  color: red;
+  font-weight: bold;
+}
+
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}

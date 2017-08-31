@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-ng-app="BeMEAN">
+<head>
+  <meta charset="UTF-8">
+  <title>Be MEAN</title>
+
+    <!--Angular -->
+  <script src="./assets/angular.js"></script>
+  <script src="./assets/angular-animate.js"></script>
+  <script src="./assets/angular-route.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  
+  <!-- Meus JS -->
+  <script type="text/javascript" src="./app.js"></script>
+  <!-- Meu CSS -->
+  <link rel="stylesheet" href="./assets/template.css">
+
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  </head>
+
+<body>
+
+  <nav>
+    <div class="nav-wrapper">
+      <div href="#" class="brand-logo">
+        <img src="https://blog.vilourenco.com.br/wp-content/uploads/2014/09/angularjs-logo.png" alt="Angular" class="resize" />
+      </div>
+      <div class="name_angular left">
+        AngularJS
+      </div>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#!/users/">Usuários</a></li>
+        <li><a href="#!/">Home</a></li>
+        <li><a href="">...</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="row wrapper">
+    <div data-ng-view>
+    </div>
+  </section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
